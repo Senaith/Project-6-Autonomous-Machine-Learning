@@ -75,3 +75,56 @@ Creating EKS Node Group role
 
 You need to create an IAM role for Worker nodes. Navigate to the IAM console, select Role on the left navigation tab and select Create role.
 
+![ml82](https://user-images.githubusercontent.com/91766546/160433151-47d06d95-59a9-4e72-a32c-a5186b27607b.png)
+
+On the Select trusted entity page, select EC2 as the use case and then select Next.
+
+![ml83](https://user-images.githubusercontent.com/91766546/160433219-1d94ff4b-b369-4a8c-b6ec-d1f3a67828bc.png)
+
+On the Add permissions page, search and select the 3 policies below for provisioning worker nodes from Amazon EC2. AmazonEKSWorkerNodePolicy AmazonEKS_CNI_Policy AmazonEC2ContainerRegistryReadOnly
+
+![ml84](https://user-images.githubusercontent.com/91766546/160433376-6360db88-d9de-4278-adb5-d1e5561a39bd.png)
+
+![ml85](https://user-images.githubusercontent.com/91766546/160433442-cbf25b27-ea5c-43d7-8965-4ef1050adc62.png)
+
+On the Name, review and create page, give your role a name and you may add a description (optional). Review and make sure all 3 policies are on the Add permission section, scroll to the bottom of the page and select Create role.
+
+![ml86](https://user-images.githubusercontent.com/91766546/160433545-9cf3e928-59c0-4080-8d83-7c3369f83acb.png)
+
+![ml87](https://user-images.githubusercontent.com/91766546/160433642-aff2ab17-d452-4ea1-86b5-4c17d7e76fee.png)
+
+![ml88](https://user-images.githubusercontent.com/91766546/160433686-47e781cb-307e-46b7-be9b-509105983b77.png)
+
+Step 3
+Creating a Cluster
+
+![ml89](https://user-images.githubusercontent.com/91766546/160435168-4dbe0657-5807-43a9-9cd1-3271ae778980.png)
+
+Select Add cluster and then select create
+
+![ml71](https://user-images.githubusercontent.com/91766546/160442481-802bcb33-e1d4-4db6-ae45-f7c3d7a19391.png)
+
+![ml72](https://user-images.githubusercontent.com/91766546/160442528-6e1b4480-4e22-4817-bbe7-fc7943851ede.png)
+
+![ml73](https://user-images.githubusercontent.com/91766546/160442557-a33284bb-3e59-4913-84d9-32c39a29ef85.png)
+
+![ml74](https://user-images.githubusercontent.com/91766546/160442587-5d9c52e2-77e4-4054-ba60-7d982516b9eb.png)
+
+Step 4
+Adding NodeGroups
+
+Select the newly created cluster.
+
+Select the Configuration tab, select Compute under Cluster Configuration.
+
+![ml75](https://user-images.githubusercontent.com/91766546/160442743-aef9b195-4276-46b4-ba67-4b5be4a5d6e0.png)
+
+![ml76](https://user-images.githubusercontent.com/91766546/160442771-b539b2bb-42be-4737-808e-8485eee78559.png)
+
+![ml77](https://user-images.githubusercontent.com/91766546/160442796-383599a6-6824-4b6a-9678-2b944aba6e88.png)
+
+![ml78](https://user-images.githubusercontent.com/91766546/160442826-16edc386-7aaa-4d71-aa23-5c9a09259f63.png)
+
+![ml79](https://user-images.githubusercontent.com/91766546/160442865-6a4ae028-1676-4fd5-bac7-765d0686a4a3.png)
+
+![ml791](https://user-images.githubusercontent.com/91766546/160444183-37e4a9a0-a67a-48bf-a62b-a368eb81f6c6.png)
