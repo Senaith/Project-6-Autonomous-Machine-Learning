@@ -70,3 +70,8 @@ Creating an EKS role
 
 ![ml81](https://user-images.githubusercontent.com/91766546/160348201-79110d8a-e08e-4754-a262-bc79ab0d23b1.png)
 
+Step 2
+Creating EKS Node Group role
+
+You need to create an IAM role for Worker nodes. Navigate to the IAM console, select Role on the left navigation tab and select Create role.
+
