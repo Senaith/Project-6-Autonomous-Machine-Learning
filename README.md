@@ -128,3 +128,108 @@ Select the Configuration tab, select Compute under Cluster Configuration.
 ![ml79](https://user-images.githubusercontent.com/91766546/160442865-6a4ae028-1676-4fd5-bac7-765d0686a4a3.png)
 
 ![ml791](https://user-images.githubusercontent.com/91766546/160444183-37e4a9a0-a67a-48bf-a62b-a368eb81f6c6.png)
+
+Connect EKS to the local terminal using AWS CLI.
+
+![ml61](https://user-images.githubusercontent.com/91766546/160501031-b54f39c3-dd87-422b-923f-48b4c277916a.png)
+![ml66](https://user-images.githubusercontent.com/91766546/160501570-03b3c04f-00a5-4e45-a6cc-b5394ff17a4a.png)
+![ml67](https://user-images.githubusercontent.com/91766546/160501589-a161d4c2-0ff9-48ec-b40b-006b54c0d07b.png)
+
+**Step 2. Create a Zebrium account and install the log collector**
+
+You’ll need a free Zebrium trial account (sign up [here](https://cloud.zebrium.com/auth/sign-up)). Create a new account, set your password and then advance to the Send Logs page.
+
+**Important:** Do not install the log collector yet as we’re going to modify the install command!
+
+![ml7](https://user-images.githubusercontent.com/91766546/160470411-5e8a6ef6-9868-43ee-a97a-69c3465bbc61.png)
+
+![ml62](https://user-images.githubusercontent.com/91766546/160471059-3e90d47e-799c-41a6-b411-bacaef2c4f07.png)
+
+Copy the Helm command from the Zebrium Send Logs page and delete the part of the code indicated in red.
+
+![ml68](https://user-images.githubusercontent.com/91766546/160502123-f2059dde-2f49-432a-be43-65d1ce754b77.png)
+
+After I run the Helm command in Terminal, the Zebrium UI should detect that logs have been received. The Zebrium pop-up will look something like this:
+
+![ml63](https://user-images.githubusercontent.com/91766546/160471858-0e8068d7-3861-451f-a1a7-914f517536a2.png)
+
+![ml64](https://user-images.githubusercontent.com/91766546/160480220-6acfebff-4a0a-4cda-9962-3c4353c904a3.png)
+
+![ml65](https://user-images.githubusercontent.com/91766546/160480281-8aad27f1-3d54-40e1-ae3b-fdde76a9c27f.png)
+
+### Step 3. Install and fire up the Sock Shop demo app
+
+[Sock Shop](https://microservices-demo.github.io/) is a really good demo microservices application as it simulates the key components of the user-facing part of an e-commerce website. It is built using Spring Boot, Go kit, and Node.js and is packaged in Docker containers. Visit [this GitHub page](https://github.com/microservices-demo/microservices-demo/blob/master/internal-docs/design.md) to learn more about the application design.
+
+![SockShop2](https://user-images.githubusercontent.com/91766546/160502929-49a53483-690d-4659-97d8-1bcb012f4c48.jpg)
+
+A little bit later, we’re going to install and use the Litmus Chaos Engine to “break” the Sock Shop application. So, we are going to install Sock Shop using a YAML config file that contains annotations for the Litmus Chaos Engine.
+
+![ml69](https://user-images.githubusercontent.com/91766546/160503077-8d0b2ee0-7a5b-4dc1-978b-6c16cb9afefd.png)
+
+Wait until all the pods are in a running state (this can take a few minutes):
+
+![ml51](https://user-images.githubusercontent.com/91766546/160503184-c7e4c67e-a5f1-4858-8266-10e7b24e9a2e.png)
+
+When all the services are running, you can bring up the app in your browser. You will need to set up port forwarding and get the front-end IP address and port by running the command below. You should do this in a separate shell window.
+
+![ml52](https://user-images.githubusercontent.com/91766546/160503320-ea8d5fe9-7201-4597-879b-847d581856ce.png)
+
+![ml53](https://user-images.githubusercontent.com/91766546/160503802-302e1400-8785-4e46-9b18-151e3e346f71.png)
+
+Now use the pod name from the command you just ran in place of XXX’s.
+
+Now open the ip_address:port from above (in this case: 127.0.0.1:8079) in a new browser tab. You should now be able to interact with the Sock Shop app in your browser and verify that it’s working correctly.
+![ml54](https://user-images.githubusercontent.com/91766546/160503985-431001bb-eb7f-421c-b128-fa273b97500b.png)
+You can also go to CloudWatch in the AWS Console and visit the Resources page under Container Insights to verify that everything looks healthy. Details on how to do this can be found at the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/deploy-container-insights-EKS.html).
+
+### Step 4. Install the Litmus Chaos Engine
+
+We’re going to use the open-source Litmus chaos tool to run a chaos experiment that “breaks” the Sock Shop app. Install the required Litmus components using the following commands:
+
+Install Litmus and create an appropriate RBAC role for the pod-network-corruption test by running the next command.
+![ml58](https://user-images.githubusercontent.com/91766546/160505171-394d8f6f-2392-4c67-a407-425574963a3a.png)
+ 
+ Followed by:
+
+![ml55](https://user-images.githubusercontent.com/91766546/160505085-4c729caa-5521-4a1f-84a8-a0cfd5db3d0b.png)
+
+![ml56](https://user-images.githubusercontent.com/91766546/160505297-f4e6fbb4-6540-4306-b6a5-013cb97403ff.png)
+
+Setup service account with the appropriate RBAC to run the network corruption experiment
+![ml57](https://user-images.githubusercontent.com/91766546/160505351-1903763a-d00b-4f8c-8126-1a87aa859923.png)
+
+Make a note of the time
+![ml59](https://user-images.githubusercontent.com/91766546/160505432-92d74e6b-2922-47d2-a5f7-937374f1f5ae.png)
+
+### Step 5. Do something else for two hours!
+
+This is a new EKS cluster and a new app and Zebrium account, so it’s important to give the machine learning a bit of time to learn the normal log patterns. We recommend waiting at least **two hours** before proceeding (you can wait longer if you like).
+
+You can use this time to explore the Zebrium UI.
+
+On the REPORTING page, you should see at least one sample root cause report.
+
+![ml41](https://user-images.githubusercontent.com/91766546/160520275-8150682f-1e66-4202-abce-324ebba07479.png)
+
+Select it and explore how to interact with Root Cause Reports! Make sure you try “peeking” and zooming into Related Events.
+
+You might also see other real root cause reports. If you do, they are likely due to anomalous patterns in the logs that occur during the bring-up of the new environment (Zebrium sees them as being anomalous because it doesn’t have much history to go on at this stage). Again, feel free to poke around.
+
+### Run a network corrupt choas experiment to break the Sock Shop app
+Now that ML has had a chance to get a baseline of the logs, you will break the environment by running a Litmus network corruption chaos experiment.
+
+To start the network corruption, run:
+
+![ml42](https://user-images.githubusercontent.com/91766546/160520552-a8a964a2-f072-45a4-b5f3-a830b8324f0e.png)
+
+Make note  of the date
+
+![ml43](https://user-images.githubusercontent.com/91766546/160520996-f2de9aae-fa9b-4229-8015-a98f13361815.png)
+
+It will take a minute or so for the experiment to start. You can tell that it’s running when the pod-network-corruption-helper goes into a Running state.  
+
+![ml44](https://user-images.githubusercontent.com/91766546/160521325-3f01c9fd-22ab-4c40-8514-5a11ca6d3754.png)
+
+Monitor its progress with kubectl (the -w option waits for output, so hit ^C once you see that everything is running):
+
