@@ -37,7 +37,7 @@ This project will cover:
 
 ![ml8](https://user-images.githubusercontent.com/91766546/160342645-4c6c2654-d22a-40bf-a09c-80ecf9e18331.png)
 
-Step 1
+### Part 1: Step 1
 Create and configure an EKS cluster
 
 The first step is launching a cluster which can be done using eksctl or through the Amazon console. For this cluster, we will use the console but since you still need eksctl that also needs to be installed.
@@ -52,6 +52,7 @@ Confirm your installation:
 
 ![ml92](https://user-images.githubusercontent.com/91766546/160345597-b0f76285-299d-4230-a12f-a8cfccc2af1a.png)
 
+### Step 2
 Creating an EKS role
 
 ![ml93](https://user-images.githubusercontent.com/91766546/160347799-e7b2b13e-a4aa-410c-81e0-4c9f62e517aa.png)
@@ -70,13 +71,12 @@ Creating an EKS role
 
 ![ml81](https://user-images.githubusercontent.com/91766546/160348201-79110d8a-e08e-4754-a262-bc79ab0d23b1.png)
 
-Step 2
+### Step 3
 Creating EKS Node Group role
 
 You need to create an IAM role for Worker nodes. Navigate to the IAM console, select Role on the left navigation tab and select Create role.
 
 ![ml82](https://user-images.githubusercontent.com/91766546/160433151-47d06d95-59a9-4e72-a32c-a5186b27607b.png)
-
 On the Select trusted entity page, select EC2 as the use case and then select Next.
 
 ![ml83](https://user-images.githubusercontent.com/91766546/160433219-1d94ff4b-b369-4a8c-b6ec-d1f3a67828bc.png)
@@ -95,7 +95,7 @@ On the Name, review and create page, give your role a name and you may add a des
 
 ![ml88](https://user-images.githubusercontent.com/91766546/160433686-47e781cb-307e-46b7-be9b-509105983b77.png)
 
-Step 3
+### Step 4
 Creating a Cluster
 
 ![ml89](https://user-images.githubusercontent.com/91766546/160435168-4dbe0657-5807-43a9-9cd1-3271ae778980.png)
@@ -110,7 +110,7 @@ Select Add cluster and then select create
 
 ![ml74](https://user-images.githubusercontent.com/91766546/160442587-5d9c52e2-77e4-4054-ba60-7d982516b9eb.png)
 
-Step 4
+### Step 5
 Adding NodeGroups
 
 Select the newly created cluster.
@@ -135,7 +135,7 @@ Connect EKS to the local terminal using AWS CLI.
 ![ml66](https://user-images.githubusercontent.com/91766546/160501570-03b3c04f-00a5-4e45-a6cc-b5394ff17a4a.png)
 ![ml67](https://user-images.githubusercontent.com/91766546/160501589-a161d4c2-0ff9-48ec-b40b-006b54c0d07b.png)
 
-**Step 2. Create a Zebrium account and install the log collector**
+### Part 2. Create a Zebrium account and install the log collector
 
 You’ll need a free Zebrium trial account (sign up [here](https://cloud.zebrium.com/auth/sign-up)). Create a new account, set your password and then advance to the Send Logs page.
 
@@ -157,7 +157,7 @@ After I run the Helm command in Terminal, the Zebrium UI should detect that logs
 
 ![ml65](https://user-images.githubusercontent.com/91766546/160480281-8aad27f1-3d54-40e1-ae3b-fdde76a9c27f.png)
 
-### Step 3. Install and fire up the Sock Shop demo app
+### Part 3. Install and fire up the Sock Shop demo app
 
 [Sock Shop](https://microservices-demo.github.io/) is a really good demo microservices application as it simulates the key components of the user-facing part of an e-commerce website. It is built using Spring Boot, Go kit, and Node.js and is packaged in Docker containers. Visit [this GitHub page](https://github.com/microservices-demo/microservices-demo/blob/master/internal-docs/design.md) to learn more about the application design.
 
@@ -183,7 +183,7 @@ Now open the ip_address:port from above (in this case: 127.0.0.1:8079) in a new 
 ![ml54](https://user-images.githubusercontent.com/91766546/160503985-431001bb-eb7f-421c-b128-fa273b97500b.png)
 You can also go to CloudWatch in the AWS Console and visit the Resources page under Container Insights to verify that everything looks healthy. Details on how to do this can be found at the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/deploy-container-insights-EKS.html).
 
-### Step 4. Install the Litmus Chaos Engine
+### Part 4. Install the Litmus Chaos Engine
 
 We’re going to use the open-source Litmus chaos tool to run a chaos experiment that “breaks” the Sock Shop app. Install the required Litmus components using the following commands:
 
@@ -202,7 +202,7 @@ Setup service account with the appropriate RBAC to run the network corruption ex
 Make a note of the time
 ![ml59](https://user-images.githubusercontent.com/91766546/160505432-92d74e6b-2922-47d2-a5f7-937374f1f5ae.png)
 
-### Step 5. Do something else for two hours!
+### Part 5. Do something else for two hours!
 
 This is a new EKS cluster and a new app and Zebrium account, so it’s important to give the machine learning a bit of time to learn the normal log patterns. We recommend waiting at least **two hours** before proceeding (you can wait longer if you like).
 
@@ -216,7 +216,7 @@ Select it and explore how to interact with Root Cause Reports! Make sure you try
 
 You might also see other real root cause reports. If you do, they are likely due to anomalous patterns in the logs that occur during the bring-up of the new environment (Zebrium sees them as being anomalous because it doesn’t have much history to go on at this stage). Again, feel free to poke around.
 
-### Run a network corrupt choas experiment to break the Sock Shop app
+### Part 6: Run a network corrupt choas experiment to break the Sock Shop app
 Now that ML has had a chance to get a baseline of the logs, you will break the environment by running a Litmus network corruption chaos experiment.
 
 To start the network corruption, run:
@@ -232,4 +232,46 @@ It will take a minute or so for the experiment to start. You can tell that it’
 ![ml44](https://user-images.githubusercontent.com/91766546/160521325-3f01c9fd-22ab-4c40-8514-5a11ca6d3754.png)
 
 Monitor its progress with kubectl (the -w option waits for output, so hit ^C once you see that everything is running):
+![ml31](https://user-images.githubusercontent.com/91766546/160526397-7d8a2a8b-39db-481b-9fc9-d9dacf609779.png)
 
+It takes awhile for the experiment to start, so you have to wait until the pod-network-corruption-helper goes into a Running state. Click shift C (^C) once everything is running.
+
+Refresh your Sock Shop UI, you might notice some operations failing or not operating the way it should.
+
+![ml45](https://user-images.githubusercontent.com/91766546/160523625-3363c280-bc5a-49df-921c-91bed9e62f7a.png)
+In my case, there was no visible change, except the time it took for an item to be added into the cart and the fact that the blue "Items in the cart" button wasn't accessible. Yours will be different but we will use Zebrium to understand the issue that has occurred.
+
+![ml33](https://user-images.githubusercontent.com/91766546/160526910-8d8a252d-7742-4623-bff8-10fe5d1d83b2.png)
+
+### Part 7. The results and how to interpret them
+
+Please give the machine learning a few minutes to detect the problem (typically 2 to 10 minutes) and then refresh your browser window until you see one or more new root cause reports **(UI refresh is NOT automatic)**.
+
+I tried the above procedure several times and saw really awesome results after each run. However, the actual root cause reports were different across runs. This is because of many factors, including the learning period, what events occurred while learning, the timing and order of the log lines while the experiment was running, other things happening on the system, and so on.
+
+![ml46](https://user-images.githubusercontent.com/91766546/160524192-d55011dc-29ba-48e9-b810-c422a38401ed.png)
+
+The reporting page contains a summary list of all the root cause reports found by the machine learning. There are three useful parts of the summary:
+
+Plain language NLP summary  This is an experimental feature where we use the GPT-3 language model to construct a summary of the report. The summary provides some useful context about the problem.
+
+Log type(s) and host(s) The log type and host (front end, events, orders, and messages) that contain the events for the incident.
+
+“Hallmark” events The ML picks out one or two events that it believes will define the problem.
+
+After running the Chaos experiment, Zebrium generated a series of reports. Here is a summary of the root cause errors that were generated in my Zebrium account. Clicking on the summary lets you drill down into the details of the root cause report. The core events represent the cluster of correlated anomalies that the ML picks out. The most important ones are the events that are either “rare” or”bad”.
+
+![ml47](https://user-images.githubusercontent.com/91766546/160527197-398cab0c-1d07-4b56-82de-e45e1c2fe15e.png)
+
+![ml48](https://user-images.githubusercontent.com/91766546/160527230-96c4cff2-72ce-41bc-9459-ae08baff3c8b.png)
+
+The process of troubleshooting and tracking down the root cause of an incident in a distributed application is becoming more and more difficult and time-consuming.
+
+## Conclusion
+
+In this project, we showed how to induce a failure in the Sock Shop microservices application by running a Litmus network corruption chaos experiment. The Zebrium machine learning technology was able to detect this and build a root cause report that detailed the root cause.
+
+This experiment shows how you can use machine learning to automatically find a correlated cluster of anomalies that represents a set of log lines that explains the root cause. The technology is designed to work with any kind of application and does not require manual training or large training data sets.
+
+Congratulations!!! you have successfully completed this project.
+                      ![m](https://user-images.githubusercontent.com/91766546/160527652-931eaebf-c905-4b70-8e9f-60bff45ebb37.jpeg)
