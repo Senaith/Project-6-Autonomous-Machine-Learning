@@ -274,4 +274,5 @@ In this project, we showed how to induce a failure in the Sock Shop microservice
 This experiment shows how you can use machine learning to automatically find a correlated cluster of anomalies that represents a set of log lines that explains the root cause. The technology is designed to work with any kind of application and does not require manual training or large training data sets.
 
 Congratulations!!! you have successfully completed this project.
+
                       ![m](https://user-images.githubusercontent.com/91766546/160527652-931eaebf-c905-4b70-8e9f-60bff45ebb37.jpeg)
